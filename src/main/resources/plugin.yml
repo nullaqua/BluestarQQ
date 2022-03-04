@@ -1,0 +1,20 @@
+name: BluestarQQ
+version: '${project.version}'
+main: me.lanzhi.bluestarqq.BluestarQQ
+api-version: 1.18
+author: lanzhi
+depend: [MiraiMC,PlaceholderAPI,BluestarAPI]
+commands:
+  bluestarqq:
+    aliases:
+      - bsqq
+    permission: bluestarqq.op
+  bindqq:
+    aliases:
+      - bind
+      - qqbind
+permissions:
+  bluestarqq.*:
+    children:
+      bluestarqq.op:
+        default: false
