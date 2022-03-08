@@ -291,6 +291,6 @@ public class listener implements Listener
             return;
         }
         MiraiBot bot = MiraiBot.getBot(config.getLong("bot"));
-        bot.getGroup(config.getLong("chatgroup")).sendMessage(event.getPlayer().getName()+": "+event.getMessage());
+        bot.getGroup(config.getLong("chatgroup")).sendMessage(ChatColor.stripColor(event.getPlayer().getName()+": "+event.getMessage()));
     }
 }
