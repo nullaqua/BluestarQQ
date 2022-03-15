@@ -31,8 +31,6 @@ public final class BluestarQQ extends JavaPlugin
         Objects.requireNonNull(getCommand("bluestarqq")).setExecutor(new maincommand());
         Objects.requireNonNull(getCommand("bindqq")).setExecutor(new bindqq());
         System.out.println("BluestarQQ已加载");
-        PrintStream out = System.out;
-
     }
 
     @Override

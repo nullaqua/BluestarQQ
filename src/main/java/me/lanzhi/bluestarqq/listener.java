@@ -15,18 +15,15 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.event.server.BroadcastMessageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.lanzhi.bluestarapi.Api.*;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
@@ -35,6 +32,7 @@ import static me.lanzhi.bluestarqq.BluestarQQ.plugin;
 
 public class listener implements Listener
 {
+    List<String> pluginMessages=new ArrayList<>();
     @EventHandler
     public void onNewFriendRequest(MiraiNewFriendRequestEvent event)
     {
@@ -147,7 +145,9 @@ public class listener implements Listener
                 }
                 cnt++;
             }
-            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&',"&8[&3 QQ &8] &7"+name+": "+message));
+            String message1=ChatColor.translateAlternateColorCodes('&',"&8[&3 QQ &8] &7"+name+": "+message);
+            pluginMessages.add(message1);
+            Bukkit.getServer().broadcastMessage(message1);
         }
     }
 
@@ -291,6 +291,40 @@ public class listener implements Listener
             return;
         }
         MiraiBot bot = MiraiBot.getBot(config.getLong("bot"));
-        bot.getGroup(config.getLong("chatgroup")).sendMessage(ChatColor.stripColor(event.getPlayer().getName()+": "+event.getMessage()));
+        String prefix = PlaceholderAPI.setPlaceholders(event.getPlayer(),"%vault_prefix%");
+        String suffix = PlaceholderAPI.setPlaceholders(event.getPlayer(),"%vault_suffix%");
+        bot.getGroup(config.getLong("chatgroup")).sendMessage(ChatColor.stripColor(suffix+"["+prefix+"]"+event.getPlayer().getName()+": "+event.getMessage()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerDeath(PlayerDeathEvent event)
+    {
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                MiraiBot bot = MiraiBot.getBot(config.getLong("bot"));
+                bot.getGroup(config.getLong("chatgroup")).sendMessage("☠️"+ChatColor.stripColor(event.getDeathMessage()));
+            }
+        }.runTaskAsynchronously(plugin);
+    }
+
+    @EventHandler
+    public synchronized void onBroadcastMessage(BroadcastMessageEvent event)
+    {
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                if (pluginMessages.remove(event.getMessage()))
+                {
+                    return;
+                }
+                MiraiBot bot = MiraiBot.getBot(config.getLong("bot"));
+                bot.getGroup(config.getLong("chatgroup")).sendMessage(ChatColor.stripColor(event.getMessage()));
+            }
+        }.runTaskAsynchronously(plugin);
     }
 }
