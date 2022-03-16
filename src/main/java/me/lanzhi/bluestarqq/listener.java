@@ -6,6 +6,7 @@ import me.dreamvoid.miraimc.api.bot.MiraiFriend;
 import me.dreamvoid.miraimc.api.bot.MiraiGroup;
 import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
 import me.dreamvoid.miraimc.bukkit.event.*;
+import me.lanzhi.bluestarqq.events.QQChatEvent;
 import me.lanzhi.bluestarqq.type.bind;
 import me.lanzhi.bluestarqq.type.reply;
 import org.bukkit.Bukkit;
@@ -148,6 +149,7 @@ public class listener implements Listener
             String message1=ChatColor.translateAlternateColorCodes('&',"&8[&3 QQ &8] &7"+name+": "+message);
             pluginMessages.add(message1);
             Bukkit.getServer().broadcastMessage(message1);
+            new QQChatEvent(event);
         }
     }
 
