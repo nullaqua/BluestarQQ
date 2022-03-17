@@ -21,8 +21,14 @@ public class QQChatEvent extends Event
     {
         return handlers;
     }
+    @NotNull
+    public static HandlerList getHandlerList()
+    {
+        return handlers;
+    }
 
-    final String message;
+    boolean cancelled=false;
+    String message;
     final MiraiGroup group;
     final MiraiBot bot;
     final long botId;
@@ -77,5 +83,17 @@ public class QQChatEvent extends Event
 
     public String getSenderName() {
         return senderName;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

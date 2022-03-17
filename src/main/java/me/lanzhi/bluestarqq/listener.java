@@ -11,6 +11,7 @@ import me.lanzhi.bluestarqq.type.bind;
 import me.lanzhi.bluestarqq.type.reply;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -146,10 +147,11 @@ public class listener implements Listener
                 }
                 cnt++;
             }
-            String message1=ChatColor.translateAlternateColorCodes('&',"&8[&3 QQ &8] &7"+name+": "+message);
+            QQChatEvent qqChatEvent=new QQChatEvent(event);
+            Bukkit.getPluginManager().callEvent(qqChatEvent);
+            String message1=ChatColor.translateAlternateColorCodes('&',"&8[&3 QQ &8] &7"+name+": "+qqChatEvent.getMessage());
             pluginMessages.add(message1);
             Bukkit.getServer().broadcastMessage(message1);
-            new QQChatEvent(event);
         }
     }
 
@@ -315,18 +317,11 @@ public class listener implements Listener
     @EventHandler
     public synchronized void onBroadcastMessage(BroadcastMessageEvent event)
     {
-        new BukkitRunnable()
+        if (pluginMessages.remove(event.getMessage()))
         {
-            @Override
-            public void run()
-            {
-                if (pluginMessages.remove(event.getMessage()))
-                {
-                    return;
-                }
-                MiraiBot bot = MiraiBot.getBot(config.getLong("bot"));
-                bot.getGroup(config.getLong("chatgroup")).sendMessage(ChatColor.stripColor(event.getMessage()));
-            }
-        }.runTaskAsynchronously(plugin);
+            return;
+        }
+        MiraiBot bot = MiraiBot.getBot(config.getLong("bot"));
+        bot.getGroup(config.getLong("chatgroup")).sendMessage(ChatColor.stripColor(event.getMessage()));
     }
 }

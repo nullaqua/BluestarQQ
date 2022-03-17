@@ -2,6 +2,7 @@ package me.lanzhi.bluestarqq;
 
 import me.lanzhi.bluestarqq.commands.bindqq;
 import me.lanzhi.bluestarqq.commands.maincommand;
+import me.lanzhi.bluestarqq.events.QQChatEvent;
 import me.lanzhi.bluestarqq.type.reply;
 import me.lanzhi.bluestarapi.Api.YamlFile;
 import org.bukkit.Bukkit;
@@ -23,7 +24,7 @@ public final class BluestarQQ extends JavaPlugin
     {
         ConfigurationSerialization.registerClass(reply.class);
         ConfigurationSerialization.registerClass(me.lanzhi.bluestarqq.type.bind.class);
-        plugin=me.lanzhi.bluestarqq.BluestarQQ.getProvidingPlugin(me.lanzhi.bluestarqq.BluestarQQ.class);
+        plugin=this;
         saveDefaultConfig();
         data=new YamlFile(new File(plugin.getDataFolder(),"data.yml"));
         config=new YamlFile(new File(plugin.getDataFolder(),"config.yml"));
