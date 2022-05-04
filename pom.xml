@@ -6,7 +6,7 @@
 
     <groupId>me.lanzhi</groupId>
     <artifactId>BluestarQQ</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <packaging>jar</packaging>
 
     <name>BluestarQQ</name>
@@ -87,13 +87,19 @@
         <dependency>
             <groupId>com.github.lanzhi6</groupId>
             <artifactId>BluestarAPI</artifactId>
-            <version>1.5</version>
+            <version>2.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.lanzhi6</groupId>
+            <artifactId>BluestarGameAPI</artifactId>
+            <version>1.1.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

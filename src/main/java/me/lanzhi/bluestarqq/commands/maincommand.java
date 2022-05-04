@@ -8,25 +8,23 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static me.lanzhi.bluestarqq.BluestarQQ.config;
-import static me.lanzhi.bluestarqq.BluestarQQ.plugin;
 
 public class maincommand implements CommandExecutor, TabExecutor
 {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    public boolean onCommand(CommandSender sender,Command command,String label,String[] args)
     {
-        if("reload".equalsIgnoreCase(args[0])&&args.length==1)
+        if ("reload".equalsIgnoreCase(args[0])&&args.length==1)
         {
             config.reload();
             sender.sendMessage(ChatColor.GREEN+"BluestarQQ已重新加载");
         }
-        if("bind".equalsIgnoreCase(args[0]))
+        if ("bind".equalsIgnoreCase(args[0]))
         {
             MiraiMC.addBinding(Bukkit.getPlayer(args[1]).getUniqueId().toString(),Long.parseLong(args[2]));
         }
@@ -34,19 +32,19 @@ public class maincommand implements CommandExecutor, TabExecutor
         {
             return false;
         }
-        if("send".equalsIgnoreCase(args[0]))
+        if ("send".equalsIgnoreCase(args[0]))
         {
             MiraiBot bot=MiraiBot.getBot(config.getLong("bot"));
-            bot.getGroup(config.getLong("chatgroup")).sendMessageMirai(sender.getName()+": "+args[1]);
+            bot.getGroup(config.getLong("chatgroup")).sendMessageMirai("系统消息: "+args[1]);
             return true;
         }
         return false;
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args)
+    public List<String> onTabComplete(CommandSender commandSender,Command command,String s,String[] args)
     {
-        if(args.length==1)
+        if (args.length==1)
         {
             List<String> tablist=new ArrayList<>();
             tablist.add("send");

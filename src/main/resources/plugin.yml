@@ -3,7 +3,13 @@ version: '${project.version}'
 main: me.lanzhi.bluestarqq.BluestarQQ
 api-version: 1.18
 author: lanzhi
-depend: [MiraiMC,PlaceholderAPI,BluestarAPI]
+depend:
+  - MiraiMC
+  - PlaceholderAPI
+  - BluestarAPI
+  - BluestarGameAPI
+loadbefore:
+  - BluestarGame
 commands:
   bluestarqq:
     aliases:

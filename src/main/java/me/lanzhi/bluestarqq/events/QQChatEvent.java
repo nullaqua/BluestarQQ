@@ -1,7 +1,6 @@
 package me.lanzhi.bluestarqq.events;
 
 import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.api.bot.MiraiGroup;
 import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
 import me.dreamvoid.miraimc.bukkit.event.MiraiGroupMessageEvent;
@@ -14,13 +13,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public class QQChatEvent extends Event
 {
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers=new HandlerList();
+
     @NotNull
     @Override
     public HandlerList getHandlers()
     {
         return handlers;
     }
+
     @NotNull
     public static HandlerList getHandlerList()
     {
@@ -36,11 +37,12 @@ public class QQChatEvent extends Event
     final MiraiNormalMember sender;
     final String senderName;
     final MiraiGroupMessageEvent event;
-    public QQChatEvent(MiraiGroupMessageEvent event)
+
+    public QQChatEvent(MiraiGroupMessageEvent event,String message)
     {
         super(true);
         this.event=event;
-        message=event.getMessage();
+        this.message=message;
         group=event.getGroup();
         botId=event.getBotID();
         bot=MiraiBot.getBot(botId);
@@ -53,47 +55,58 @@ public class QQChatEvent extends Event
         }
     }
 
-    public long getBotId() {
+    public long getBotId()
+    {
         return botId;
     }
 
-    public long getSenderId() {
+    public long getSenderId()
+    {
         return senderId;
     }
 
-    public MiraiBot getBot() {
+    public MiraiBot getBot()
+    {
         return bot;
     }
 
-    public MiraiGroupMessageEvent getEvent() {
+    public MiraiGroupMessageEvent getEvent()
+    {
         return event;
     }
 
-    public MiraiGroup getGroup() {
+    public MiraiGroup getGroup()
+    {
         return group;
     }
 
-    public MiraiNormalMember getSender() {
+    public MiraiNormalMember getSender()
+    {
         return sender;
     }
 
-    public String getMessage() {
+    public String getMessage()
+    {
         return message;
     }
 
-    public String getSenderName() {
+    public String getSenderName()
+    {
         return senderName;
     }
 
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setCancelled(boolean cancelled)
+    {
+        this.cancelled=cancelled;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessage(String message)
+    {
+        this.message=message;
     }
 }
