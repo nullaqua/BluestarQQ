@@ -39,131 +39,6 @@ public class listener implements Listener
 {
     List<String> pluginMessages=new ArrayList<>();
 
-    private static void decide(Event event)
-    {
-        String message;
-        Object sender;
-        OfflinePlayer player=null;
-        long id;
-        Long groupId=(long) 0;
-        if (event instanceof MiraiGroupMessageEvent)
-        {
-            message=((MiraiGroupMessageEvent) event).getMessage();
-            sender=((MiraiGroupMessageEvent) event).getGroup();
-            id=((MiraiGroupMessageEvent) event).getSenderID();
-            groupId=((MiraiGroupMessageEvent) event).getGroupID();
-            String uuid=MiraiMC.getBinding(((MiraiGroupMessageEvent) event).getSenderID());
-            if (!"".equalsIgnoreCase(uuid))
-            {
-                player=Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-            }
-        }
-        else if (event instanceof MiraiFriendMessageEvent)
-        {
-            message=((MiraiFriendMessageEvent) event).getMessage();
-            sender=((MiraiFriendMessageEvent) event).getFriend();
-            id=((MiraiFriendMessageEvent) event).getFriend().getID();
-            String uuid=MiraiMC.getBinding(((MiraiFriendMessageEvent) event).getSenderID());
-            if (!"".equalsIgnoreCase(uuid))
-            {
-                player=Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-            }
-        }
-        else
-        {
-            return;
-        }
-        message=message.toLowerCase();
-        Map<String, Object> map=((reply) config.get("reply")).serialize();
-        for (String key: map.keySet())
-        {
-            if (Pattern.compile(key).matcher(message).find())
-            {
-                HashMap<String, Object> m=(HashMap<String, Object>) map.get(key);
-                String mode=m.get("mode").toString();
-                if ((boolean) m.get("bind")&&player==null)
-                {
-                    if (sender instanceof MiraiGroup)
-                    {
-                        ((MiraiGroup) sender).sendMessageMirai("[mirai:at:"+id+"] \n错误!请绑定minecraft账号!");
-                    }
-                    else
-                    {
-                        ((MiraiFriend) sender).sendMessage("错误!请绑定minecraft账号!");
-                    }
-                    continue;
-                }
-                switch (mode)
-                {
-                    case "image":
-                    {
-                        File[] files=new File(plugin.getDataFolder(),m.get("file").toString()).listFiles();
-                        if (sender instanceof MiraiGroup)
-                        {
-                            if (m.get("group") instanceof List&&m.get("group")!=null)
-                            {
-                                if (!((List<?>) m.get("group")).contains(groupId.toString()))
-                                {
-                                    break;
-                                }
-                            }
-                            String file="[mirai:image:"+((MiraiGroup) sender).uploadImage(
-                                    files[Bluestar.randomInt(files.length)])+"]";
-                            ((MiraiGroup) sender).sendMessageMirai("[mirai:at:"+id+"] \n"+ChatColor.stripColor(
-                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString()))+file);
-                        }
-                        else
-                        {
-                            if (m.get("friend") instanceof List&&m.get("friend")!=null)
-                            {
-                                if (!((List<?>) m.get("friend")).contains(id+""))
-                                {
-                                    break;
-                                }
-                            }
-                            String file="[mirai:image:"+((MiraiFriend) sender).uploadImage(
-                                    files[Bluestar.randomInt(files.length)])+"]";
-                            ((MiraiFriend) sender).sendMessageMirai(ChatColor.stripColor(
-                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString()))+file);
-                        }
-                        break;
-                    }
-                    case "message":
-                    {
-                        if (sender instanceof MiraiGroup)
-                        {
-                            if (m.get("group") instanceof List&&m.get("group")!=null)
-                            {
-                                if (!((List<?>) m.get("group")).contains(groupId.toString()))
-                                {
-                                    break;
-                                }
-                            }
-                            ((MiraiGroup) sender).sendMessageMirai("[mirai:at:"+id+"] \n"+ChatColor.stripColor(
-                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString())));
-                        }
-                        else
-                        {
-                            if (m.get("friend") instanceof List&&m.get("friend")!=null)
-                            {
-                                if (!((List<?>) m.get("friend")).contains(id+""))
-                                {
-                                    break;
-                                }
-                            }
-                            ((MiraiFriend) sender).sendMessageMirai(ChatColor.stripColor(
-                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString())));
-                        }
-                        break;
-                    }
-                    default:
-                    {
-                    }
-                }
-            }
-        }
-    }
-
     @EventHandler
     public void onNewFriendRequest(MiraiNewFriendRequestEvent event)
     {
@@ -304,6 +179,131 @@ public class listener implements Listener
                                                                   );
             pluginMessages.add(message1);
             Bukkit.getServer().broadcastMessage(message1);
+        }
+    }
+
+    private static void decide(Event event)
+    {
+        String message;
+        Object sender;
+        OfflinePlayer player=null;
+        long id;
+        Long groupId=(long) 0;
+        if (event instanceof MiraiGroupMessageEvent)
+        {
+            message=((MiraiGroupMessageEvent) event).getMessage();
+            sender=((MiraiGroupMessageEvent) event).getGroup();
+            id=((MiraiGroupMessageEvent) event).getSenderID();
+            groupId=((MiraiGroupMessageEvent) event).getGroupID();
+            String uuid=MiraiMC.getBinding(((MiraiGroupMessageEvent) event).getSenderID());
+            if (!"".equalsIgnoreCase(uuid))
+            {
+                player=Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            }
+        }
+        else if (event instanceof MiraiFriendMessageEvent)
+        {
+            message=((MiraiFriendMessageEvent) event).getMessage();
+            sender=((MiraiFriendMessageEvent) event).getFriend();
+            id=((MiraiFriendMessageEvent) event).getFriend().getID();
+            String uuid=MiraiMC.getBinding(((MiraiFriendMessageEvent) event).getSenderID());
+            if (!"".equalsIgnoreCase(uuid))
+            {
+                player=Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            }
+        }
+        else
+        {
+            return;
+        }
+        message=message.toLowerCase();
+        Map<String, Object> map=((reply) config.get("reply")).serialize();
+        for (String key: map.keySet())
+        {
+            if (Pattern.compile(key).matcher(message).find())
+            {
+                HashMap<String, Object> m=(HashMap<String, Object>) map.get(key);
+                String mode=m.get("mode").toString();
+                if ((boolean) m.get("bind")&&player==null)
+                {
+                    if (sender instanceof MiraiGroup)
+                    {
+                        ((MiraiGroup) sender).sendMessageMirai("[mirai:at:"+id+"] \n错误!请绑定minecraft账号!");
+                    }
+                    else
+                    {
+                        ((MiraiFriend) sender).sendMessage("错误!请绑定minecraft账号!");
+                    }
+                    continue;
+                }
+                switch (mode)
+                {
+                    case "image":
+                    {
+                        File[] files=new File(plugin.getDataFolder(),m.get("file").toString()).listFiles();
+                        if (sender instanceof MiraiGroup)
+                        {
+                            if (m.get("group") instanceof List&&m.get("group")!=null)
+                            {
+                                if (!((List<?>) m.get("group")).contains(groupId.toString()))
+                                {
+                                    break;
+                                }
+                            }
+                            String file="[mirai:image:"+((MiraiGroup) sender).uploadImage(
+                                    files[Bluestar.randomInt(files.length)])+"]";
+                            ((MiraiGroup) sender).sendMessageMirai("[mirai:at:"+id+"] \n"+ChatColor.stripColor(
+                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString()))+file);
+                        }
+                        else
+                        {
+                            if (m.get("friend") instanceof List&&m.get("friend")!=null)
+                            {
+                                if (!((List<?>) m.get("friend")).contains(id+""))
+                                {
+                                    break;
+                                }
+                            }
+                            String file="[mirai:image:"+((MiraiFriend) sender).uploadImage(
+                                    files[Bluestar.randomInt(files.length)])+"]";
+                            ((MiraiFriend) sender).sendMessageMirai(ChatColor.stripColor(
+                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString()))+file);
+                        }
+                        break;
+                    }
+                    case "message":
+                    {
+                        if (sender instanceof MiraiGroup)
+                        {
+                            if (m.get("group") instanceof List&&m.get("group")!=null)
+                            {
+                                if (!((List<?>) m.get("group")).contains(groupId.toString()))
+                                {
+                                    break;
+                                }
+                            }
+                            ((MiraiGroup) sender).sendMessageMirai("[mirai:at:"+id+"] \n"+ChatColor.stripColor(
+                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString())));
+                        }
+                        else
+                        {
+                            if (m.get("friend") instanceof List&&m.get("friend")!=null)
+                            {
+                                if (!((List<?>) m.get("friend")).contains(id+""))
+                                {
+                                    break;
+                                }
+                            }
+                            ((MiraiFriend) sender).sendMessageMirai(ChatColor.stripColor(
+                                    PlaceholderAPI.setPlaceholders(player,m.get("message").toString())));
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
         }
     }
 
