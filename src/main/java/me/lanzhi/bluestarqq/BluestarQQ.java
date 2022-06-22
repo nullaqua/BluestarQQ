@@ -26,10 +26,8 @@ public final class BluestarQQ extends JavaPlugin
         ConfigurationSerialization.registerClass(me.lanzhi.bluestarqq.type.bind.class);
         plugin=this;
         saveDefaultConfig();
-        data=new YamlFile(new File(plugin.getDataFolder(),"data.yml"));
-        config=new YamlFile(new File(plugin.getDataFolder(),"config.yml"));
-        data.reload();
-        config.reload();
+        data=YamlFile.loadYamlFile(new File(plugin.getDataFolder(),"data.yml"));
+        config=YamlFile.loadYamlFile(new File(plugin.getDataFolder(),"config.yml"));
         Bukkit.getPluginManager().registerEvents(new listener(),this);
         Objects.requireNonNull(getCommand("bluestarqq")).setExecutor(new maincommand());
         Objects.requireNonNull(getCommand("bindqq")).setExecutor(new bindqq());
