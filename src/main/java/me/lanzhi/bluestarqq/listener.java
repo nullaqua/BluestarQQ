@@ -11,7 +11,7 @@ import me.dreamvoid.miraimc.bukkit.event.friend.MiraiNewFriendRequestEvent;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberJoinEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiFriendMessageEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
-import me.lanzhi.bluestarapi.Api.Bluestar;
+import me.lanzhi.bluestarapi.api.Bluestar;
 import me.lanzhi.bluestarqq.events.QQChatEvent;
 import me.lanzhi.bluestarqq.type.bind;
 import me.lanzhi.bluestarqq.type.reply;

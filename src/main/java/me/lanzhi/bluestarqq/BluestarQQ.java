@@ -1,6 +1,6 @@
 package me.lanzhi.bluestarqq;
 
-import me.lanzhi.bluestarapi.Api.config.YamlFile;
+import me.lanzhi.bluestarapi.api.config.YamlFile;
 import me.lanzhi.bluestargameapi.BluestarGamePluginInterface;
 import me.lanzhi.bluestarqq.commands.bindqq;
 import me.lanzhi.bluestarqq.commands.maincommand;

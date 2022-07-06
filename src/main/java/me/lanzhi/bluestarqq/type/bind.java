@@ -27,9 +27,13 @@ public class bind implements ConfigurationSerializable
         Map<String, Map<String, String>> qq=(Map<String, Map<String, String>>) map.get("qq");
         Map<String, String> minecraft=(Map<String, String>) map.get("minecraft");
         if (minecraft==null)
+        {
             minecraft=new HashMap<>();
+        }
         if (qq==null)
+        {
             qq=new HashMap<>();
+        }
         Map<String, String> map1=new HashMap<>();
         map1.put("uuid",uuid.toString());
         map1.put("key",key+"");
