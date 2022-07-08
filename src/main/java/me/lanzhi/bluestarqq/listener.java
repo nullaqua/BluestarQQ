@@ -195,10 +195,10 @@ public class listener implements Listener
             sender=((MiraiGroupMessageEvent) event).getGroup();
             id=((MiraiGroupMessageEvent) event).getSenderID();
             groupId=((MiraiGroupMessageEvent) event).getGroupID();
-            String uuid=MiraiMC.getBinding(((MiraiGroupMessageEvent) event).getSenderID());
-            if (!"".equalsIgnoreCase(uuid))
+            UUID uuid=MiraiMC.getBind(((MiraiGroupMessageEvent) event).getSenderID());
+            if (uuid!=null)
             {
-                player=Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                player=Bukkit.getOfflinePlayer(uuid);
             }
         }
         else if (event instanceof MiraiFriendMessageEvent)
@@ -206,10 +206,10 @@ public class listener implements Listener
             message=((MiraiFriendMessageEvent) event).getMessage();
             sender=((MiraiFriendMessageEvent) event).getFriend();
             id=((MiraiFriendMessageEvent) event).getFriend().getID();
-            String uuid=MiraiMC.getBinding(((MiraiFriendMessageEvent) event).getSenderID());
-            if (!"".equalsIgnoreCase(uuid))
+            UUID uuid=MiraiMC.getBind(((MiraiFriendMessageEvent) event).getSenderID());
+            if (uuid!=null)
             {
-                player=Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                player=Bukkit.getOfflinePlayer(uuid);
             }
         }
         else

@@ -45,7 +45,7 @@ public class bindqq implements CommandExecutor, TabExecutor
             sender.sendMessage(ChatColor.RED+"错误!");
             return false;
         }
-        if (!"".equals(MiraiMC.getBinding(id)))
+        if (MiraiMC.getBind(id)!=null)
         {
             BluestarGamePluginInterface bluestarGamePlugin=Bukkit.getServicesManager().load(BluestarGamePluginInterface.class);
             if (bluestarGamePlugin==null)
@@ -54,7 +54,7 @@ public class bindqq implements CommandExecutor, TabExecutor
                 sender.sendMessage(ChatColor.RED+"出现错误,错误代码: bsgnull");
                 return true;
             }
-            if (bluestarGamePlugin.getBluestarGameManager().getApi().getXiaoMoBank().getBorrow(UUID.fromString(MiraiMC.getBinding(id)))!=0)
+            if (bluestarGamePlugin.getBluestarGameManager().getApi().getXiaoMoBank().getBorrow(MiraiMC.getBind(id))!=0)
             {
                 sender.sendMessage(ChatColor.RED+"此qq号已绑定Minecraft账号,且绑定的账号有银行贷款未偿还,无法解绑");
                 return true;
