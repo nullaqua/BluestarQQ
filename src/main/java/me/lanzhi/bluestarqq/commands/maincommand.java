@@ -2,6 +2,7 @@ package me.lanzhi.bluestarqq.commands;
 
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
+import me.lanzhi.bluestarqq.BluestarQQ;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static me.lanzhi.bluestarqq.BluestarQQ.config;
@@ -19,6 +21,10 @@ public class maincommand implements CommandExecutor, TabExecutor
     @Override
     public boolean onCommand(CommandSender sender,Command command,String label,String[] args)
     {
+        if ("debug".equalsIgnoreCase(args[0]))
+        {
+            BluestarQQ.debug=!BluestarQQ.debug;
+        }
         if ("reload".equalsIgnoreCase(args[0])&&args.length==1)
         {
             config.reload();
@@ -26,7 +32,7 @@ public class maincommand implements CommandExecutor, TabExecutor
         }
         if ("bind".equalsIgnoreCase(args[0]))
         {
-            MiraiMC.addBinding(Bukkit.getPlayer(args[1]).getUniqueId().toString(),Long.parseLong(args[2]));
+            MiraiMC.addBind(Bukkit.getPlayer(args[1]).getUniqueId(),Long.parseLong(args[2]));
         }
         if (args.length!=2)
         {
@@ -46,10 +52,7 @@ public class maincommand implements CommandExecutor, TabExecutor
     {
         if (args.length==1)
         {
-            List<String> tablist=new ArrayList<>();
-            tablist.add("send");
-            tablist.add("reload");
-            return tablist;
+            return Arrays.asList("debug","reload","bind","send");
         }
         return new ArrayList<>();
     }

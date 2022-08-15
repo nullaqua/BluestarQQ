@@ -6,7 +6,7 @@
 
     <groupId>me.lanzhi</groupId>
     <artifactId>BluestarQQ</artifactId>
-    <version>1.1.5</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>BluestarQQ</name>
@@ -75,19 +75,19 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.1-R0.1-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.github.dreamvoid</groupId>
             <artifactId>MiraiMC-Integration</artifactId>
-            <version>1.7-rc2</version>
+            <version>1.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.lanzhi6</groupId>
             <artifactId>BluestarAPI</artifactId>
-            <version>2.4.0-pre1</version>
+            <version>3.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>com.github.lanzhi6</groupId>
             <artifactId>BluestarGameAPI</artifactId>
-            <version>1.1.0</version>
+            <version>3.4.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

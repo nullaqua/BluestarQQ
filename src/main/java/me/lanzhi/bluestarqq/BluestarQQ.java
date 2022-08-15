@@ -1,6 +1,6 @@
 package me.lanzhi.bluestarqq;
 
-import me.lanzhi.bluestarapi.api.config.YamlFile;
+import me.lanzhi.api.config.YamlFile;
 import me.lanzhi.bluestargameapi.BluestarGamePluginInterface;
 import me.lanzhi.bluestarqq.commands.bindqq;
 import me.lanzhi.bluestarqq.commands.maincommand;
@@ -18,6 +18,7 @@ public final class BluestarQQ extends JavaPlugin
     public static YamlFile config;
     public static Plugin plugin;
     public static YamlFile data;
+    public static boolean debug=false;
 
     @Override
     public void onEnable()
@@ -32,7 +33,6 @@ public final class BluestarQQ extends JavaPlugin
         Objects.requireNonNull(getCommand("bluestarqq")).setExecutor(new maincommand());
         Objects.requireNonNull(getCommand("bindqq")).setExecutor(new bindqq());
         System.out.println("BluestarQQ已加载");
-        System.out.println(Bukkit.getServicesManager().load(BluestarGamePluginInterface.class)==null);
     }
 
     @Override
