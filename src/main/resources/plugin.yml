@@ -4,13 +4,13 @@ main: me.lanzhi.bluestarqq.BluestarQQ
 api-version: 1.18
 author: lanzhi
 depend:
-  - MiraiMC
+  - BluestarBot
   - PlaceholderAPI
-  - BluestarAPI
   - BluestarGameAPI
 loadbefore:
   - BluestarGame
 commands:
+  qqreply:
   bluestarqq:
     aliases:
       - bsqq

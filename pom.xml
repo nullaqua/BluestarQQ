@@ -6,7 +6,7 @@
 
     <groupId>me.lanzhi</groupId>
     <artifactId>BluestarQQ</artifactId>
-    <version>1.2.0</version>
+    <version>1.4.0</version>
     <packaging>jar</packaging>
 
     <name>BluestarQQ</name>
@@ -14,6 +14,7 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <github.global.server>github</github.global.server>
     </properties>
 
     <build>
@@ -23,9 +24,42 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo
+                    </altDeploymentRepository>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.12</version>
+                <configuration>
+                    <message>Maven artifacts for ${project.version}</message>
+                    <noJekyll>true</noJekyll>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory><!--本地jar地址-->
+                    <branch>refs/heads/main</branch><!--分支的名称-->
+                    <merge>true</merge>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <repositoryName>maven-repository</repositoryName><!--对应github上创建的仓库名称 name-->
+                    <repositoryOwner>lanzhi6</repositoryOwner><!--github 仓库所有者即登录用户名-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -69,6 +103,10 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>mvn-repo</id>
+            <url>https://raw.githubusercontent.com/lanzhi6/maven-repository/main</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -79,15 +117,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.dreamvoid</groupId>
-            <artifactId>MiraiMC-Integration</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.lanzhi6</groupId>
-            <artifactId>BluestarAPI</artifactId>
-            <version>3.0.0</version>
+            <groupId>me.lanzhi</groupId>
+            <artifactId>BluestarBot</artifactId>
+            <version>1.4.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -97,15 +129,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.lanzhi6</groupId>
+            <groupId>me.lanzhi</groupId>
             <artifactId>BluestarGameAPI</artifactId>
-            <version>3.4.3</version>
+            <version>3.5.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
+            <version>23.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.4</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

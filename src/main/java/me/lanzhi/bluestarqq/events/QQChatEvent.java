@@ -1,9 +1,9 @@
 package me.lanzhi.bluestarqq.events;
 
-import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.api.bot.MiraiGroup;
-import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
-import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
+import me.lanzhi.bluestarbot.api.Bot;
+import me.lanzhi.bluestarbot.api.contact.group.Group;
+import me.lanzhi.bluestarbot.api.contact.group.GroupMember;
+import me.lanzhi.bluestarbot.api.event.message.received.GroupMessageEvent;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -30,29 +30,25 @@ public class QQChatEvent extends Event
 
     boolean cancelled=false;
     String message;
-    final MiraiGroup group;
-    final MiraiBot bot;
+    final Group group;
+    final Bot bot;
     final long botId;
     final long senderId;
-    final MiraiNormalMember sender;
+    final GroupMember sender;
     final String senderName;
-    final MiraiGroupMessageEvent event;
+    final GroupMessageEvent event;
 
-    public QQChatEvent(MiraiGroupMessageEvent event,String message)
+    public QQChatEvent(GroupMessageEvent event,String message)
     {
         super(true);
         this.event=event;
         this.message=message;
         group=event.getGroup();
-        botId=event.getBotID();
-        bot=MiraiBot.getBot(botId);
-        senderId=event.getSenderID();
-        sender=group.getMember(senderId);
-        senderName=event.getSenderNameCard();
-        if (senderName==null||senderName.equals(""))
-        {
-            sender.getNick();
-        }
+        botId=event.getBot().getId();
+        bot=event.getBot();
+        senderId=event.getSender().getId();
+        sender=event.getSender();
+        senderName=event.getSenderName();
     }
 
     public long getBotId()
@@ -65,22 +61,22 @@ public class QQChatEvent extends Event
         return senderId;
     }
 
-    public MiraiBot getBot()
+    public Bot getBot()
     {
         return bot;
     }
 
-    public MiraiGroupMessageEvent getEvent()
+    public GroupMessageEvent getEvent()
     {
         return event;
     }
 
-    public MiraiGroup getGroup()
+    public Group getGroup()
     {
         return group;
     }
 
-    public MiraiNormalMember getSender()
+    public GroupMember getSender()
     {
         return sender;
     }

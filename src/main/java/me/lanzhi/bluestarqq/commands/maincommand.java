@@ -1,8 +1,10 @@
 package me.lanzhi.bluestarqq.commands;
 
-import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.api.MiraiMC;
+import me.lanzhi.bluestarbot.api.BluestarBot;
+import me.lanzhi.bluestarbot.api.Bot;
+import me.lanzhi.bluestarbot.api.message.Message;
 import me.lanzhi.bluestarqq.BluestarQQ;
+import me.lanzhi.bluestarqq.message.MessageListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static me.lanzhi.bluestarqq.BluestarQQ.config;
+import static me.lanzhi.bluestarqq.BluestarQQ.*;
 
 public class maincommand implements CommandExecutor, TabExecutor
 {
@@ -23,16 +25,17 @@ public class maincommand implements CommandExecutor, TabExecutor
     {
         if ("debug".equalsIgnoreCase(args[0]))
         {
-            BluestarQQ.debug=!BluestarQQ.debug;
+            debug=!debug;
         }
         if ("reload".equalsIgnoreCase(args[0])&&args.length==1)
         {
-            config.reload();
+            MessageListener.clearAll();
+            plugin.load();
             sender.sendMessage(ChatColor.GREEN+"BluestarQQ已重新加载");
         }
         if ("bind".equalsIgnoreCase(args[0]))
         {
-            MiraiMC.addBind(Bukkit.getPlayer(args[1]).getUniqueId(),Long.parseLong(args[2]));
+            BluestarBot.addBind(Bukkit.getPlayer(args[1]).getUniqueId(),Long.parseLong(args[2]));
         }
         if (args.length!=2)
         {
@@ -40,8 +43,8 @@ public class maincommand implements CommandExecutor, TabExecutor
         }
         if ("send".equalsIgnoreCase(args[0]))
         {
-            MiraiBot bot=MiraiBot.getBot(config.getLong("bot"));
-            bot.getGroup(config.getLong("chatgroup")).sendMessageMirai("系统消息: "+args[1]);
+            Bot bot=BluestarBot.getBot(BluestarQQ.bot);
+            bot.getGroup(chatGroup).sendMessage(Message.getFromMiraiCode("系统消息: "+args[1]));
             return true;
         }
         return false;
